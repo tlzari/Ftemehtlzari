@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سنجش عزت‌نفس (ایزنک)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Vazirmatn Font -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .bg-gradient-custom {
+            background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 50%, #f3e8ff 100%);
+        }
+        .instagram-gradient {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+        .btn-gradient {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+        }
+        .btn-gradient:hover {
+            background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
+        }
+    </style>
+</head>
+<body class="bg-gradient-custom min-h-screen flex items-center justify-center p-3 sm:p-4 text-slate-800">
+
+    <div class="max-w-md w-full space-y-4 sm:space-y-6 my-auto">
+        
+        <!-- Header Card: Only Name & Instagram Button -->
+        <div class="bg-white/90 backdrop-blur-md rounded-2xl p-3.5 sm:p-4 shadow-md border border-white/60 flex items-center justify-between gap-2">
+            <a href="https://www.instagram.com/fatemehtalezariii?dlrf=MXQxbTc0NTZsdG81OQ==" target="_blank" rel="noopener noreferrer" class="instagram-gradient text-white px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs sm:text-sm font-medium flex items-center gap-1.5 shadow-sm hover:opacity-90 transition-all dir-ltr shrink-0">
+                <i class="fa-brands fa-instagram text-sm sm:text-base"></i>
+                <span>@fatemehtalezariii</span>
+            </a>
+            <div class="text-slate-700 font-bold text-xs sm:text-sm whitespace-nowrap text-right">
+                فاطمه طالع زاري
+            </div>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-100 text-center space-y-6">
+            <div class="w-16 h-16 btn-gradient rounded-2xl flex items-center justify-center text-white text-2xl mx-auto shadow-lg shadow-indigo-200">
+                <i class="fa-regular fa-heart"></i>
+            </div>
+
+            <div class="space-y-2">
+                <h1 class="text-xl sm:text-2xl font-bold text-slate-800">سنجش عزت‌نفس (ایزنک)</h1>
+                <p class="text-slate-500 text-xs sm:text-sm">شناخت بهتر احساس ارزشمندی درون شما</p>
+            </div>
+
+            <div class="bg-slate-50 rounded-2xl p-5 border border-slate-100 space-y-3.5 text-right">
+                <div class="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-lg mx-auto">
+                    <i class="fa-regular fa-circle-question"></i>
+                </div>
+                
+                <h2 class="text-base font-bold text-slate-800 text-center">به خودشناسی خوش آمدید</h2>
+                
+                <p class="text-slate-600 text-xs sm:text-sm leading-relaxed text-center">
+                    این پرسشنامه شامل <strong class="text-slate-800">۳۰ سؤال کوتاه</strong> است که میزان عزت‌نفس و احساس ارزشمندی شما را ارزیابی می‌کند. لطفاً با اولین برداشتی که به ذهنتان می‌رسد به سؤالات پاسخ دهید.
+                </p>
+
+                <div class="bg-amber-50 border border-amber-200/60 rounded-xl p-3 text-amber-800 text-xs flex items-start gap-2">
+                    <span class="text-sm">💡</span>
+                    <span>پاسخ درست یا غلط وجود ندارد. صادقانه‌ترین گزینه‌ای که نشان‌دهنده حال حاضر شماست را انتخاب کنید.</span>
+                </div>
+            </div>
+
+            <button onclick="startQuiz()" class="w-full btn-gradient text-white font-bold py-3.5 px-6 rounded-2xl shadow-lg shadow-indigo-200 flex items-center justify-center gap-2 transition-all hover:shadow-xl active:scale-[0.98]">
+                <span>شروع آزمون</span>
+                <i class="fa-solid fa-arrow-left text-sm"></i>
+            </button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="hidden bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-100 space-y-6">
+            <!-- Progress Bar & Top Control -->
+            <div class="space-y-2">
+                <div class="flex justify-between items-center text-xs font-semibold text-slate-500">
+                    <span id="question-number">سوال ۱ از ۳۰</span>
+                    <span id="progress-percent">0%</span>
+                </div>
+                <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+                    <div id="progress-bar" class="btn-gradient h-full transition-all duration-300" style="width: 3.33%"></div>
+                </div>
+            </div>
+
+            <!-- Question Text -->
+            <div class="min-h-[80px] flex items-center justify-center text-center">
+                <h2 id="question-text" class="text-base sm:text-lg font-bold text-slate-800 leading-relaxed">
+                    متن سوال اینجا قرار می‌گیرد...
+                </h2>
+            </div>
+
+            <!-- Options -->
+            <div class="space-y-3" id="options-container">
+                <button onclick="selectOption('yes')" class="option-btn w-full p-4 rounded-2xl border-2 border-slate-100 hover:border-indigo-500 hover:bg-indigo-50/50 text-slate-700 font-medium text-sm flex items-center justify-between transition-all group">
+                    <span>بله / آری</span>
+                    <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-indigo-500 flex items-center justify-center">
+                        <div class="w-2.5 h-2.5 rounded-full bg-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    </div>
+                </button>
+                <button onclick="selectOption('no')" class="option-btn w-full p-4 rounded-2xl border-2 border-slate-100 hover:border-indigo-500 hover:bg-indigo-50/50 text-slate-700 font-medium text-sm flex items-center justify-between transition-all group">
+                    <span>خیر / نه</span>
+                    <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-indigo-500 flex items-center justify-center">
+                        <div class="w-2.5 h-2.5 rounded-full bg-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    </div>
+                </button>
+                <button onclick="selectOption('unsure')" class="option-btn w-full p-4 rounded-2xl border-2 border-slate-100 hover:border-indigo-500 hover:bg-indigo-50/50 text-slate-700 font-medium text-sm flex items-center justify-between transition-all group">
+                    <span>نمی‌دانم / تا حدودی</span>
+                    <div class="w-5 h-5 rounded-full border-2 border-slate-300 group-hover:border-indigo-500 flex items-center justify-center">
+                        <div class="w-2.5 h-2.5 rounded-full bg-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Navigation Bar -->
+            <div class="pt-2 flex items-center justify-between border-t border-slate-100">
+                <button id="prev-btn" onclick="prevQuestion()" class="text-xs font-semibold text-slate-400 hover:text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed flex items-center gap-1 py-1 px-2" disabled>
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                    <span>سوال قبلی</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen" class="hidden bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-100 text-center space-y-6">
+            <div class="w-20 h-20 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center text-3xl mx-auto border-4 border-indigo-100">
+                <i class="fa-solid fa-chart-pie"></i>
+            </div>
+
+            <div class="space-y-1">
+                <h2 class="text-xl font-bold text-slate-800">نتیجه سنجش شما</h2>
+                <p class="text-slate-500 text-xs">تحلیل عزت‌نفس بر اساس الگوی ایزنک</p>
+            </div>
+
+            <div class="bg-slate-50 rounded-2xl p-5 border border-slate-100 space-y-3">
+                <div class="text-slate-500 text-xs font-medium">امتیاز نهایی شما:</div>
+                <div class="text-4xl font-extrabold text-indigo-600" id="score-display">0 از 30</div>
+                <div id="result-level" class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700">
+                    سطح عزت‌نفس
+                </div>
+            </div>
+
+            <div id="result-description" class="text-slate-600 text-xs sm:text-sm leading-relaxed text-right bg-indigo-50/50 p-4 rounded-2xl border border-indigo-100/50">
+                توضیحات مربوط به نتیجه کاربر در این قسمت نمایش داده می‌شود.
+            </div>
+
+            <button onclick="restartQuiz()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 px-6 rounded-2xl transition-all text-sm flex items-center justify-center gap-2">
+                <i class="fa-solid fa-rotate-right"></i>
+                <span>آزمون مجدد</span>
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        const questions = [
+            { text: "آیا اغلب فکر می‌کنید که دیگران از شما بهتر هستند؟", key: "yes" },
+            { text: "آیا هنگام صحبت در جمع احساس نگران بودن یا خجالت می‌کنید؟", key: "yes" },
+            { text: "آیا احساس می‌کنید که اغلب در کارهای خود شکست می‌خورید؟", key: "yes" },
+            { text: "آیا به تصمیم‌گیری‌های خود اطمینان کامل دارید؟", key: "no" },
+            { text: "آیا انتقاد دیگران شما را برای مدت طولانی ناراحت می‌کند؟", key: "yes" },
+            { text: "آیا خود را فردی باارزش و مفید می‌دانید؟", key: "no" },
+            { text: "آیا احساس می‌کنید که توانایی‌های کافی برای مواجهه با مشکلات را دارید؟", key: "no" },
+            { text: "آیا از ظاهر خود رضایت کامل دارید؟", key: "no" },
+            { text: "آیا نگران این هستید که دیگران در مورد شما چه فکری می‌کنند؟", key: "yes" },
+            { text: "آیا برای انجام کارهای جدید و دشوار شجاعت کافی دارید؟", key: "no" },
+            { text: "آیا فکر می‌کنید که دوستانتان شما را واقعاً دوست دارند؟", key: "no" },
+            { text: "آیا اغلب به خاطر اشتباهات گذشته احساس گناه می‌کنید؟", key: "yes" },
+            { text: "آیا وقتی توانایی انجام کاری را دارید، به خود افتخار می‌کنید؟", key: "no" },
+            { text: "آیا احساس می‌کنید کنترل کافی روی زندگی خود ندارید؟", key: "yes" },
+            { text: "آیا می‌توان گفت که احساس تنهایی و بی‌کسی می‌کنید؟", key: "yes" },
+            { text: "آیا برای بیان نظرات و عقاید خود احساس راحتی می‌کنید؟", key: "no" },
+            { text: "آیا معمولاً خودتان را به خاطر شکست‌ها سرزنش می‌کنید؟", key: "yes" },
+            { text: "آیا احساس می‌کنید که می‌توانید آینده خود را موفق بسازید؟", key: "no" },
+            { text: "آیا احساس می‌کنید که استعداد یا توانایی ویژه‌ای ندارید؟", key: "yes" },
+            { text: "آیا به راحتی می‌توانید با افراد جدید ارتباط برقرار کنید؟", key: "no" },
+            { text: "آیا اغلب احساس می‌کنید مورد سوءاستفاده قرار گرفته‌اید؟", key: "yes" },
+            { text: "آیا در موقعیت‌های حساس و دشوار، خود را به راحتی باخته و گیج می‌شوید؟", key: "yes" },
+            { text: "آیا از اینکه موفقیت‌های خود را برای دیگران بیان کنید لذت می‌برید؟", key: "no" },
+            { text: "آیا از این که پاسخ اشتباهی بدهید خجالت می‌کشید؟", key: "yes" },
+            { text: "آیا فکر می‌کنید اطرافیان بیش از حد از شما انتظار دارند؟", key: "yes" },
+            { text: "آیا احساس می‌کنید فردی با هدف و باانگیزه در زندگی هستید؟", key: "no" },
+            { text: "آیا در برابر مشکلات زود ناامید و تسلیم می‌شوید؟", key: "yes" },
+            { text: "آیا فکر می‌کنید دیگران همیشه متوجه نقاط ضعف شما می‌شوند؟", key: "yes" },
+            { text: "آیا اغلب احساس حسادت نسبت به موفقیت‌های دیگران می‌کنید؟", key: "yes" },
+            { text: "آیا به طور کلی احساس رضایت و خوشبختی از زندگی خود دارید؟", key: "no" }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+
+        function startQuiz() {
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+            currentQuestion = 0;
+            userAnswers = new Array(questions.length).fill(null);
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('question-text').innerText = q.text;
+            document.getElementById('question-number').innerText = `سوال ${currentQuestion + 1} از ۳۰`;
+            
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            document.getElementById('progress-percent').innerText = `${Math.round(progress)}%`;
+
+            const prevBtn = document.getElementById('prev-btn');
+            prevBtn.disabled = currentQuestion === 0;
+
+            const buttons = document.querySelectorAll('#options-container button');
+            buttons.forEach(btn => {
+                btn.classList.remove('border-indigo-500', 'bg-indigo-50/50');
+            });
+        }
+
+        function selectOption(choice) {
+            userAnswers[currentQuestion] = choice;
+            currentQuestion++;
+
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            } else {
+                calculateResults();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+            }
+        }
+
+        function calculateResults() {
+            let totalScore = 0;
+
+            userAnswers.forEach((ans, index) => {
+                const q = questions[index];
+                if (ans === 'unsure') {
+                    totalScore += 0.5;
+                } else if (ans === q.key) {
+                    totalScore += 1;
+                }
+            });
+
+            showResults(totalScore);
+        }
+
+        function showResults(score) {
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+
+            const finalScore = Math.round(score);
+            document.getElementById('score-display').innerText = `${finalScore} از ۳۰`;
+
+            const levelEl = document.getElementById('result-level');
+            const descEl = document.getElementById('result-description');
+
+            if (finalScore >= 22) {
+                levelEl.innerText = "عزت‌نفس بالا و مطلوب";
+                levelEl.className = "inline-block px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700";
+                descEl.innerText = "شما از عزت‌نفس و احساس ارزش ذاتی بالایی برخوردار هستید. به توانایی‌ها و تصمیمات خود اعتماد دارید و در مواجهه با چالش‌ها و انتقادها، انعطاف‌پذیری و روحیه‌ای قوی از خود نشان می‌دهید.";
+            } else if (finalScore >= 14) {
+                levelEl.innerText = "عزت‌نفس متوسط";
+                levelEl.className = "inline-block px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-700";
+                descEl.innerText = "عزت‌نفس شما در حد متوسط قرار دارد. در برخی موقعیت‌ها به خود اعتماد کامل دارید، اما ممکن است در چالش‌های بزرگ‌تر یا هنگام مواجهه با انتقادات دیگران، دچار تردید و احساس عدم امنیت شوید.";
+            } else {
+                levelEl.innerText = "عزت‌نفس پایین (نیازمند تقویت)";
+                levelEl.className = "inline-block px-3 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-700";
+                descEl.innerText = "میزان عزت‌نفس شما نیاز به توجه و تقویت دارد. ممکن است احساس کنید توانایی‌هایتان دیده نمی‌شود یا در مواجهه با مشکلات خود را سرزنش می‌کنید. تمرین خودمهربانی و کار بر روی باورهای فردی می‌تواند به بهبود این مسیر کمک شایانی کند.";
+            }
+        }
+
+        function restartQuiz() {
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('start-screen').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
